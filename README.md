@@ -4,6 +4,7 @@ Nikhil N
 Mithun M
 Vaishnav
 
+https://drive.google.com/file/d/1mKokqBiza-FkDsM7c1v7DrXm3IyKdvV2/view?usp=drivesdk  (Video Link)
 problem statements: "EcoFinds - Sustainable Second-Hand 
 Marketplace
 
