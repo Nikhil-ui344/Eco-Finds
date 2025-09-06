@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router';
 import { useUser } from '../hooks/user';
+import { ProtectedRoute } from '../components/ProtectedRoute';
 import EditProfile from '../components/EditProfile';
 import EditListing from '../components/EditListing';
 import Header from '../components/Header';
@@ -13,12 +14,24 @@ export function meta() {
   ];
 }
 
-export default function Profile() {
-  const { user, userListings, purchaseHistory, deleteListing, markAsSold, getStats } = useUser();
+function ProfileContent() {
+  const { user, userListings, loading, deleteListing, markAsSold, getStats } = useUser();
   const [activeTab, setActiveTab] = useState('profile');
   const [showEditProfile, setShowEditProfile] = useState(false);
   const [editingListing, setEditingListing] = useState(null);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(null);
+
+  if (loading) {
+    return (
+      <div className={styles.profilePage}>
+        <Header />
+        <div className={styles.loading}>
+          <div className={styles.loadingSpinner}></div>
+          <p>Loading your profile...</p>
+        </div>
+      </div>
+    );
+  }
 
   const stats = getStats();
 
@@ -32,11 +45,20 @@ export default function Profile() {
   };
 
   const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric'
-    });
+    if (!dateString) return 'Recently';
+    try {
+      const date = dateString.seconds ? new Date(dateString.seconds * 1000) : new Date(dateString);
+      // Use ISO string formatting to avoid locale-based hydration mismatches
+      return date.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        timeZone: 'UTC' // Use UTC to ensure consistent formatting
+      });
+    } catch (error) {
+      console.warn('Error formatting date:', error);
+      return 'Recently';
+    }
   };
 
   return (
@@ -280,5 +302,13 @@ export default function Profile() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function Profile() {
+  return (
+    <ProtectedRoute>
+      <ProfileContent />
+    </ProtectedRoute>
   );
 }

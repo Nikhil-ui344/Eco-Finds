@@ -4,6 +4,7 @@ import { signOut } from 'firebase/auth';
 import { useAuth } from '../lib/auth';
 import { useCart } from '../hooks/cart';
 import { auth } from '../lib/firebase';
+import { useIsClient } from '../lib/clientOnly';
 import styles from './Header.module.css';
 
 const Header = () => {
@@ -11,15 +12,18 @@ const Header = () => {
   const [showUserMenu, setShowUserMenu] = useState(false);
   const { user, loading } = useAuth();
   const { totalItems } = useCart();
+  const isClient = useIsClient();
 
   useEffect(() => {
+    if (!isClient) return;
+    
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [isClient]);
 
   const handleSignOut = async () => {
     try {

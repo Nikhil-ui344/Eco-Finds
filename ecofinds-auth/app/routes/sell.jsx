@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { useUser } from '../hooks/user';
+import { ProtectedRoute } from '../components/ProtectedRoute';
 import Header from '../components/Header';
 import styles from './SellProduct.module.css';
 
@@ -11,7 +12,7 @@ export function meta() {
   ];
 }
 
-export default function Sell() {
+function SellContent() {
   const navigate = useNavigate();
   const { addListing } = useUser();
   const [currentStep, setCurrentStep] = useState(1);
@@ -535,5 +536,13 @@ export default function Sell() {
         </form>
       </div>
     </div>
+  );
+}
+
+export default function Sell() {
+  return (
+    <ProtectedRoute>
+      <SellContent />
+    </ProtectedRoute>
   );
 }

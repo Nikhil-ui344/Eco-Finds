@@ -50,24 +50,52 @@ export const UserProvider = ({ children }) => {
       
       if (!profile) {
         // Create new profile for first-time users
-        profile = await createUserProfile(authUser.uid, {
-          name: authUser.displayName || 'EcoFinds User',
-          email: authUser.email,
-          avatar: authUser.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(authUser.displayName || authUser.email)}&background=758E48&color=fff`,
-          location: '',
-          bio: '',
-          phone: ''
-        });
+        try {
+          profile = await createUserProfile(authUser.uid, {
+            name: authUser.displayName || 'EcoFinds User',
+            email: authUser.email,
+            avatar: authUser.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(authUser.displayName || authUser.email)}&background=758E48&color=fff`,
+            location: '',
+            bio: '',
+            phone: ''
+          });
+        } catch (createError) {
+          console.warn('Could not create user profile in Firebase, using fallback data');
+          // Use fallback profile if Firebase creation fails
+          profile = {
+            name: authUser.displayName || 'EcoFinds User',
+            email: authUser.email,
+            avatar: authUser.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(authUser.displayName || authUser.email)}&background=758E48&color=fff`,
+            location: '',
+            bio: '',
+            phone: ''
+          };
+        }
       }
       
       setUserProfile(profile);
       
       // Load user listings
-      const listings = await getUserListings(authUser.uid);
-      setUserListings(listings);
+      try {
+        const listings = await getUserListings(authUser.uid);
+        setUserListings(listings);
+      } catch (listingsError) {
+        console.warn('Could not load user listings from Firebase');
+        setUserListings([]);
+      }
       
     } catch (error) {
       console.error('Error loading user data:', error);
+      // Set fallback profile if everything fails
+      setUserProfile({
+        name: authUser.displayName || 'EcoFinds User',
+        email: authUser.email,
+        avatar: authUser.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(authUser.displayName || authUser.email)}&background=758E48&color=fff`,
+        location: '',
+        bio: '',
+        phone: ''
+      });
+      setUserListings([]);
     }
     setLoading(false);
   };

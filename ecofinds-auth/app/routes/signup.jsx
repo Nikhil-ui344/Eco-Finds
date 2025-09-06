@@ -38,7 +38,7 @@ export default function Signup() {
       if (cred.user) {
         await updateProfile(cred.user, { displayName });
       }
-      nav("/dashboard");
+      nav("/");
     } catch (err) {
       setError(err?.message ?? "Signup failed");
     } finally {

@@ -22,7 +22,7 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (!authLoading && user) nav("/home");
+    if (!authLoading && user) nav("/");
   }, [authLoading, user, nav]);
 
   async function onSubmit(e) {
@@ -39,7 +39,7 @@ export default function Login() {
     setLoading(true);
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      nav("/dashboard");
+      nav("/");
     } catch (err) {
       setError(err?.message ?? "Login failed");
     } finally {

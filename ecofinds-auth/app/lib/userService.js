@@ -3,7 +3,10 @@ import { db } from "./firebase";
 
 // User profile operations
 export async function createUserProfile(userId, userData) {
-  if (!db) return null;
+  if (!db) {
+    console.warn('[userService] Firestore not initialized, skipping user profile creation');
+    return null;
+  }
   try {
     const userRef = doc(db, "users", userId);
     const profile = {
@@ -22,7 +25,10 @@ export async function createUserProfile(userId, userData) {
 }
 
 export async function getUserProfile(userId) {
-  if (!db || !userId) return null;
+  if (!db || !userId) {
+    console.warn('[userService] Firestore not initialized or no userId provided');
+    return null;
+  }
   try {
     const userRef = doc(db, "users", userId);
     const userSnap = await getDoc(userRef);
@@ -133,7 +139,10 @@ export async function deleteListing(listingId, userId) {
 
 // Get all listings for browsing
 export async function getAllListings() {
-  if (!db) return [];
+  if (!db) {
+    console.warn('[userService] Firestore not initialized, returning empty listings');
+    return [];
+  }
   try {
     const q = query(collection(db, "listings"), where("status", "==", "active"));
     const querySnapshot = await getDocs(q);

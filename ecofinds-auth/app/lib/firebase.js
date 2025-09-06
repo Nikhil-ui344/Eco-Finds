@@ -13,18 +13,28 @@ const firebaseConfig = {
 };
 
 const isBrowser = typeof window !== "undefined";
-const hasConfig = Object.values(firebaseConfig).every(Boolean);
+const hasConfig = Object.values(firebaseConfig).some(val => val && val !== 'undefined');
+
 if (!hasConfig && isBrowser) {
-  console.warn("[firebase] Missing config. Copy .env.example to .env and fill keys.");
+  console.warn("[firebase] Missing config. Firebase features will be disabled. Copy .env.example to .env and fill keys.");
 }
 
 let app;
+let auth = null;
+let db = null;
+
 if (isBrowser && hasConfig) {
-  app = initializeApp(firebaseConfig);
+  try {
+    app = initializeApp(firebaseConfig);
+    auth = getAuth(app);
+    db = getFirestore(app);
+    console.log("[firebase] Initialized successfully");
+  } catch (error) {
+    console.error("[firebase] Initialization failed:", error);
+  }
 }
 
-export const auth = app ? getAuth(app) : null;
-export const db = app ? getFirestore(app) : null;
+export { auth, db };
 export const isFirebaseReady = Boolean(app);
 
 // Optional analytics init (browser only + supported)

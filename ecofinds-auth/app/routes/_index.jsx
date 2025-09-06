@@ -6,7 +6,8 @@ import SearchBar from '../components/SearchBar';
 import Banner from '../components/Banner';
 import CategoryCard from '../components/CategoryCard';
 import ProductCard from '../components/ProductCard';
-import { categories, products } from '../data/mockData';
+import { categories } from '../data/mockData';
+import { getMarketplaceProducts } from '../lib/marketplaceService';
 import styles from './LandingPage.module.css';
 
 export function meta() {
@@ -18,13 +19,33 @@ export function meta() {
 
 export default function LandingPage() {
   const [searchQuery, setSearchQuery] = useState('');
-  const [filteredProducts, setFilteredProducts] = useState(products);
+  const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
   const [sortBy, setSortBy] = useState('name');
   const [filterBy, setFilterBy] = useState('all');
   const [groupBy, setGroupBy] = useState('none');
   const [noResults, setNoResults] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  // Load marketplace products on mount
+  useEffect(() => {
+    loadProducts();
+  }, []);
+
+  const loadProducts = async () => {
+    try {
+      const marketplaceProducts = await getMarketplaceProducts();
+      setProducts(marketplaceProducts);
+      setFilteredProducts(marketplaceProducts);
+    } catch (error) {
+      console.error('Error loading products:', error);
+    }
+    setLoading(false);
+  };
 
   useEffect(() => {
+    if (!products.length) return;
+    
     let filtered = [...products];
 
     // Enhanced search filter with tags and fuzzy matching
@@ -82,7 +103,7 @@ export default function LandingPage() {
 
     setFilteredProducts(filtered);
     setNoResults(filtered.length === 0 && (searchQuery || filterBy !== 'all'));
-  }, [searchQuery, sortBy, filterBy]);
+  }, [searchQuery, sortBy, filterBy, products]);
 
   const groupProducts = () => {
     if (groupBy === 'none') {
@@ -165,7 +186,12 @@ export default function LandingPage() {
         {/* Products Section */}
         <section className={styles.productsSection}>
           <div className={styles.container}>
-            {noResults ? (
+            {loading ? (
+              <div className={styles.loading}>
+                <div className={styles.loadingSpinner}></div>
+                <p>Loading products...</p>
+              </div>
+            ) : noResults ? (
               <div className={styles.noResults}>
                 <div className={styles.noResultsIcon}>
                   <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
@@ -204,19 +230,6 @@ export default function LandingPage() {
                 </div>
               ))
             )}
-          </div>
-        </section>
-
-        {/* User Profile/Dashboard Link */}
-        <section className={styles.profileSection}>
-          <div className={styles.container}>
-            <Link to="/profile" className={styles.profileLink}>
-              <span>Go to Dashboard</span>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-                <polyline points="12,5 19,12 12,19"></polyline>
-              </svg>
-            </Link>
           </div>
         </section>
       </main>
