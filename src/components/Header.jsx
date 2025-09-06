@@ -54,7 +54,7 @@ const Header = () => {
             </svg>
           </Link>
           
-          <button className={styles.cartButton}>
+          <Link to="/cart" className={styles.cartButton}>
             <svg 
               width="24" 
               height="24" 
@@ -70,7 +70,7 @@ const Header = () => {
             {totalItems > 0 && (
               <span className={styles.cartCounter}>{totalItems}</span>
             )}
-          </button>
+          </Link>
         </div>
       </div>
     </header>

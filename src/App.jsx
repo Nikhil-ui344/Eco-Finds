@@ -5,6 +5,7 @@ import ProductPage from './pages/ProductPage';
 import CategoryPage from './pages/CategoryPage';
 import Profile from './pages/Profile';
 import SellProduct from './pages/SellProduct';
+import Cart from './pages/Cart';
 import { CartProvider } from './hooks/useCart';
 import { UserProvider } from './hooks/useUser';
 import './App.css';
@@ -21,6 +22,7 @@ function App() {
               <Route path="/product/:id" element={<ProductPage />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/sell" element={<SellProduct />} />
+              <Route path="/cart" element={<Cart />} />
             </Routes>
           </div>
         </Router>

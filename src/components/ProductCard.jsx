@@ -6,11 +6,15 @@ import styles from './ProductCard.module.css';
 const ProductCard = ({ product }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [isAddingToCart, setIsAddingToCart] = useState(false);
-  const { addToCart } = useCart();
+  const { addToCart, items } = useCart();
+  
+  const isInCart = items.some(item => item.id === product.id);
 
   const handleAddToCart = (e) => {
     e.preventDefault();
     e.stopPropagation();
+    
+    if (isInCart) return;
     
     setIsAddingToCart(true);
     addToCart(product);
@@ -117,10 +121,15 @@ const ProductCard = ({ product }) => {
           <div className={styles.location}>{product.location}</div>
           <button
             onClick={handleAddToCart}
-            disabled={!product.inStock || isAddingToCart}
-            className={`${styles.addToCartButton} ${isAddingToCart ? styles.adding : ''} ${!product.inStock ? styles.disabled : ''}`}
+            disabled={!product.inStock || isAddingToCart || isInCart}
+            className={`${styles.addToCartButton} ${isAddingToCart ? styles.adding : ''} ${!product.inStock ? styles.disabled : ''} ${isInCart ? styles.inCart : ''}`}
+            title={isInCart ? 'Already in cart' : 'Add to cart'}
           >
-            {isAddingToCart ? (
+            {isInCart ? (
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M20 6L9 17l-5-5" />
+              </svg>
+            ) : isAddingToCart ? (
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M20 6L9 17l-5-5" />
               </svg>

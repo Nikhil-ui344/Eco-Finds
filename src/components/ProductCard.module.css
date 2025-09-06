@@ -243,6 +243,17 @@
   transform: none;
 }
 
+.addToCartButton.inCart {
+  background: var(--primary-green);
+  cursor: default;
+  opacity: 0.7;
+}
+
+.addToCartButton.inCart:hover {
+  background: var(--primary-green);
+  transform: none;
+}
+
 /* Ripple effect */
 .addToCartButton::after {
   content: '';

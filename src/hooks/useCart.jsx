@@ -7,51 +7,20 @@ const cartReducer = (state, action) => {
     case 'ADD_TO_CART':
       const existingItem = state.items.find(item => item.id === action.payload.id);
       if (existingItem) {
-        return {
-          ...state,
-          items: state.items.map(item =>
-            item.id === action.payload.id
-              ? { ...item, quantity: item.quantity + 1 }
-              : item
-          ),
-          totalItems: state.totalItems + 1
-        };
+        // For second-hand items, don't allow duplicates
+        return state;
       }
       return {
         ...state,
-        items: [...state.items, { ...action.payload, quantity: 1 }],
+        items: [...state.items, action.payload],
         totalItems: state.totalItems + 1
       };
     
     case 'REMOVE_FROM_CART':
-      const itemToRemove = state.items.find(item => item.id === action.payload);
       return {
         ...state,
         items: state.items.filter(item => item.id !== action.payload),
-        totalItems: state.totalItems - (itemToRemove?.quantity || 0)
-      };
-    
-    case 'UPDATE_QUANTITY':
-      const item = state.items.find(item => item.id === action.payload.id);
-      const oldQuantity = item?.quantity || 0;
-      const newQuantity = action.payload.quantity;
-      
-      if (newQuantity <= 0) {
-        return {
-          ...state,
-          items: state.items.filter(item => item.id !== action.payload.id),
-          totalItems: state.totalItems - oldQuantity
-        };
-      }
-      
-      return {
-        ...state,
-        items: state.items.map(item =>
-          item.id === action.payload.id
-            ? { ...item, quantity: newQuantity }
-            : item
-        ),
-        totalItems: state.totalItems - oldQuantity + newQuantity
+        totalItems: state.totalItems - 1
       };
     
     case 'CLEAR_CART':
@@ -81,16 +50,12 @@ export const CartProvider = ({ children }) => {
     dispatch({ type: 'REMOVE_FROM_CART', payload: productId });
   };
 
-  const updateQuantity = (productId, quantity) => {
-    dispatch({ type: 'UPDATE_QUANTITY', payload: { id: productId, quantity } });
-  };
-
   const clearCart = () => {
     dispatch({ type: 'CLEAR_CART' });
   };
 
   const getTotalPrice = () => {
-    return state.items.reduce((total, item) => total + (item.price * item.quantity), 0);
+    return state.items.reduce((total, item) => total + item.price, 0);
   };
 
   return (
@@ -98,7 +63,6 @@ export const CartProvider = ({ children }) => {
       ...state,
       addToCart,
       removeFromCart,
-      updateQuantity,
       clearCart,
       getTotalPrice
     }}>
