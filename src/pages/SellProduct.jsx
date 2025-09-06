@@ -23,12 +23,12 @@ const SellProduct = () => {
   const categories = [
     'Vehicles',
     'Electronics & Appliances',
-    'Mobiles',
     'Furniture',
-    'Fashion',
     'Pets',
-    'Books, Sports & Hobbies',
-    'Services'
+    'Sports',
+    'Hobbies',
+    'Books',
+    'Fashion'
   ];
 
   const conditions = [

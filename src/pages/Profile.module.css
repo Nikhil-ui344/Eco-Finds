@@ -155,6 +155,27 @@
   transform: translateY(-2px);
 }
 
+.homeButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #f8f9fa;
+  color: var(--text-dark);
+  padding: 1rem 2rem;
+  border: 2px solid var(--border-color);
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.homeButton:hover {
+  background: white;
+  border-color: var(--primary-green);
+  color: var(--primary-green);
+  transform: translateY(-2px);
+}
+
 /* Tab Navigation */
 .tabNavigation {
   display: flex;

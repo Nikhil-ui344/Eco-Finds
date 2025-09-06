@@ -13,39 +13,39 @@ export const categories = [
   },
   {
     id: 3,
-    name: 'Mobiles',
-    image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&h=300&fit=crop',
-    description: 'Used smartphones and mobile accessories'
-  },
-  {
-    id: 4,
     name: 'Furniture',
     image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop',
     description: 'Pre-owned furniture & home essentials'
   },
   {
-    id: 5,
-    name: 'Fashion',
-    image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400&h=300&fit=crop',
-    description: 'Vintage & second-hand clothing'
-  },
-  {
-    id: 6,
+    id: 4,
     name: 'Pets',
     image: 'https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=400&h=300&fit=crop',
     description: 'Pet supplies and accessories'
   },
   {
+    id: 5,
+    name: 'Sports',
+    image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop',
+    description: 'Used sports equipment & gear'
+  },
+  {
+    id: 6,
+    name: 'Hobbies',
+    image: 'https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=400&h=300&fit=crop',
+    description: 'Hobby items and collectibles'
+  },
+  {
     id: 7,
-    name: 'Books, Sports & Hobbies',
+    name: 'Books',
     image: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400&h=300&fit=crop',
-    description: 'Pre-loved books, sports equipment & hobby items'
+    description: 'Pre-loved books & collectibles'
   },
   {
     id: 8,
-    name: 'Services',
-    image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=300&fit=crop',
-    description: 'Professional and personal services'
+    name: 'Fashion',
+    image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400&h=300&fit=crop',
+    description: 'Vintage & second-hand clothing'
   }
 ];
 
@@ -149,7 +149,7 @@ export const products = [
     tags: ['yoga mat', 'fitness', 'exercise', 'yoga', 'workout', 'pilates', 'gym', 'sports'],
     price: 15.99,
     originalPrice: 39.99,
-    category: 'Books, Sports & Hobbies',
+    category: 'Sports',
     condition: 'Very Good',
     description: 'High-quality yoga mat with minimal use. Cleaned and sanitized. No tears or damage. Perfect for someone starting their yoga journey or as a backup mat.',
     images: [
@@ -244,7 +244,7 @@ export const additionalProducts = [
     tags: ['books', 'literature', 'classics', 'reading', 'collection', 'novels', 'education'],
     price: 45.00,
     originalPrice: 120.00,
-    category: 'Books, Sports & Hobbies',
+    category: 'Books',
     condition: 'Good',
     description: 'Beautiful collection of classic literature books. Some shelf wear but pages are in great condition.',
     images: [
@@ -286,7 +286,7 @@ export const additionalProducts = [
     tags: ['tennis racket', 'sports', 'tennis', 'racket', 'fitness', 'game', 'equipment'],
     price: 65.00,
     originalPrice: 150.00,
-    category: 'Books, Sports & Hobbies',
+    category: 'Sports',
     condition: 'Good',
     description: 'Complete tennis set with two rackets and balls. Perfect for getting back into the sport.',
     images: [
