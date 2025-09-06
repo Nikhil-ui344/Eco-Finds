@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router';
 import { signOut } from 'firebase/auth';
 import { useAuth } from '../lib/auth';
+import { useUser } from '../hooks/user';
 import { useCart } from '../hooks/cart';
 import { auth } from '../lib/firebase';
 import { useIsClient } from '../lib/clientOnly';
@@ -11,6 +12,7 @@ const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
   const { user, loading } = useAuth();
+  const { userProfile } = useUser();
   const { totalItems } = useCart();
   const isClient = useIsClient();
 
@@ -71,11 +73,11 @@ const Header = () => {
                     className={styles.userButton}
                   >
                     <img 
-                      src={user.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.displayName || user.email)}&background=758E48&color=fff`}
-                      alt={user.displayName || 'User'}
+                      src={userProfile?.avatar || user?.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(userProfile?.name || user?.displayName || user?.email || 'User')}&background=758E48&color=fff`}
+                      alt={userProfile?.name || user?.displayName || 'User'}
                       className={styles.userAvatar}
                     />
-                    <span className={styles.userName}>{user.displayName || user.email}</span>
+                    <span className={styles.userName}>{userProfile?.name || user?.displayName || user?.email}</span>
                   </button>
                   {showUserMenu && (
                     <div className={styles.dropdownMenu}>

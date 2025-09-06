@@ -29,12 +29,25 @@ export async function getUserProfile(userId) {
     console.warn('[userService] Firestore not initialized or no userId provided');
     return null;
   }
+  
+  // Check if the app is properly initialized
+  if (!db.app) {
+    console.error('[userService] Firebase app is not properly initialized');
+    return null;
+  }
+  
   try {
     const userRef = doc(db, "users", userId);
     const userSnap = await getDoc(userRef);
     return userSnap.exists() ? userSnap.data() : null;
   } catch (error) {
     console.error("Error getting user profile:", error);
+    
+    // Check if it's a network/auth issue
+    if (error.code === 'unavailable' || error.code === 'unauthenticated') {
+      console.warn('[userService] Firestore service unavailable or unauthenticated');
+    }
+    
     return null;
   }
 }
@@ -143,12 +156,25 @@ export async function getAllListings() {
     console.warn('[userService] Firestore not initialized, returning empty listings');
     return [];
   }
+  
+  // Check if the app is properly initialized
+  if (!db.app) {
+    console.error('[userService] Firebase app is not properly initialized');
+    return [];
+  }
+  
   try {
     const q = query(collection(db, "listings"), where("status", "==", "active"));
     const querySnapshot = await getDocs(q);
     return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
   } catch (error) {
     console.error("Error getting all listings:", error);
+    
+    // Check if it's a network/auth issue
+    if (error.code === 'unavailable' || error.code === 'unauthenticated') {
+      console.warn('[userService] Firestore service unavailable or unauthenticated');
+    }
+    
     return [];
   }
 }
