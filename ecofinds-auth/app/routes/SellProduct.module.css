@@ -1,0 +1,547 @@
+.sellPage {
+  min-height: 100vh;
+  background: var(--gray-50);
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.backBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--primary-600);
+  text-decoration: none;
+  font-weight: 500;
+  margin-bottom: 2rem;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-md);
+  transition: var(--transition-default);
+}
+
+.backBtn:hover {
+  background: var(--primary-50);
+  color: var(--primary-700);
+}
+
+.header h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+.nextBtn:disabled {
+  background: var(--gray-400);
+  color: white;
+  cursor: not-allowed;
+  color: var(--gray-900);
+  margin: 0 0 0.5rem 0;
+}
+
+.header p {
+  color: var(--gray-600);
+  font-size: 1.125rem;
+  margin: 0;
+}
+
+/* Progress Bar */
+.progressBar {
+  position: relative;
+  margin-bottom: 3rem;
+}
+
+.progressSteps {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  z-index: 2;
+}
+
+.progressStep {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.stepNumber {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--gray-300);
+  color: var(--gray-600);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  transition: var(--transition-default);
+}
+
+.activeStep .stepNumber {
+  background: var(--primary-600);
+  color: white;
+}
+
+.stepLabel {
+  color: var(--gray-600);
+.helperText {
+  margin-top: 0.75rem;
+  color: var(--gray-600);
+  font-size: 0.9rem;
+}
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.activeStep .stepLabel {
+  color: var(--primary-600);
+}
+
+.progressLine {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  right: 20px;
+  height: 2px;
+  background: var(--gray-300);
+  z-index: 1;
+}
+
+.progressFill {
+  height: 100%;
+  background: var(--primary-600);
+  transition: width 0.3s ease;
+}
+
+/* Form */
+.sellForm {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.stepContent h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--gray-900);
+  margin: 0 0 2rem 0;
+}
+
+.formGroup {
+  margin-bottom: 1.5rem;
+}
+
+.formGroup.invalid input,
+.formGroup.invalid select,
+.formGroup.invalid textarea {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.errorText {
+  margin-top: 0.5rem;
+  color: #b91c1c;
+  font-size: 0.875rem;
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.formGroup label {
+  display: block;
+  font-weight: 500;
+  color: var(--gray-700);
+  margin-bottom: 0.5rem;
+}
+
+.formGroup input,
+.formGroup select,
+.formGroup textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--gray-300);
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+  transition: var(--transition-default);
+}
+
+.formGroup input:focus,
+.formGroup select:focus,
+.formGroup textarea:focus {
+  outline: none;
+  border-color: var(--primary-500);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.formGroup textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.checkboxGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  padding: 1rem;
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-md);
+  transition: var(--transition-default);
+}
+
+.checkboxLabel:hover {
+  border-color: var(--primary-300);
+  background: var(--primary-25);
+}
+
+.checkboxLabel input[type="checkbox"] {
+  display: none;
+}
+
+.checkmark {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--gray-400);
+  border-radius: 4px;
+  position: relative;
+  flex-shrink: 0;
+  transition: var(--transition-default);
+}
+
+.checkboxLabel input[type="checkbox"]:checked + .checkmark {
+  background: var(--primary-600);
+  border-color: var(--primary-600);
+}
+
+.checkboxLabel input[type="checkbox"]:checked + .checkmark::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+/* Photo Upload */
+.photoInstructions {
+  color: var(--gray-600);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.photoCounter {
+  font-weight: 600;
+  color: var(--gray-700);
+}
+
+.required {
+  color: #ef4444;
+}
+
+.requirementAlert {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #fef2f2;
+  color: #dc2626;
+  padding: 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid #fecaca;
+  margin-bottom: 1.5rem;
+}
+
+.imageUploadSection {
+  margin-bottom: 2rem;
+}
+
+.imageGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.imagePreview {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--gray-100);
+}
+
+.imagePreview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.removeImageBtn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  width: 24px;
+  height: 24px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.mainImageBadge {
+  position: absolute;
+  bottom: 0.5rem;
+  left: 0.5rem;
+  background: var(--primary-600);
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.imageControls {
+  position: absolute;
+  bottom: 0.5rem;
+  right: 0.5rem;
+  display: flex;
+  gap: 0.25rem;
+}
+
+.imageControls button {
+  background: rgba(0,0,0,0.6);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  width: 28px;
+  height: 24px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.imageControls button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.uploadBtn {
+  aspect-ratio: 1;
+  border: 2px dashed var(--gray-300);
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition-default);
+  background: var(--gray-50);
+  text-align: center;
+  padding: 1rem;
+}
+
+.uploadBtn:hover {
+  border-color: var(--primary-400);
+  background: var(--primary-25);
+  color: var(--primary-600);
+}
+
+.uploadBtn svg {
+  margin-bottom: 0.5rem;
+  color: var(--gray-400);
+}
+
+.uploadBtn:hover svg {
+  color: var(--primary-600);
+}
+
+/* Preview */
+.listingPreview {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--gray-200);
+}
+
+.listingPreview h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--gray-900);
+  margin: 0 0 1rem 0;
+}
+
+.previewCard {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-md);
+  background: var(--gray-50);
+}
+
+.previewImage {
+  width: 80px;
+  height: 80px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.previewImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.noImagePlaceholder {
+  width: 100%;
+  height: 100%;
+  background: var(--gray-200);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gray-500);
+  font-size: 0.75rem;
+}
+
+.previewInfo h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--gray-900);
+  margin: 0 0 0.5rem 0;
+}
+
+.previewPrice {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--primary-600);
+  margin: 0 0 0.25rem 0;
+}
+
+.previewCondition,
+.previewCategory {
+  font-size: 0.875rem;
+  color: var(--gray-600);
+  margin: 0;
+}
+
+/* Form Actions */
+.formActions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--gray-200);
+}
+
+.prevBtn,
+.nextBtn,
+.submitBtn {
+  padding: 0.75rem 2rem;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-default);
+  border: none;
+}
+
+.prevBtn {
+  background: var(--gray-200);
+  color: var(--gray-700);
+}
+
+.prevBtn:hover {
+  background: var(--gray-300);
+}
+
+.nextBtn,
+.submitBtn {
+  background: var(--primary-600);
+  color: white;
+}
+
+.nextBtn:hover,
+.submitBtn:hover {
+  background: var(--primary-700);
+}
+
+.submitBtn.disabled {
+  background: var(--gray-400);
+  cursor: not-allowed;
+}
+
+.submitBtn.disabled:hover {
+  background: var(--gray-400);
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .header h1 {
+    font-size: 2rem;
+  }
+
+  .formRow {
+    grid-template-columns: 1fr;
+  }
+
+  .progressSteps {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .progressLine {
+    display: none;
+  }
+
+  .imageGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .previewCard {
+    flex-direction: column;
+  }
+
+  .previewImage {
+    width: 100%;
+    height: 200px;
+  }
+
+  .formActions {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .prevBtn,
+  .nextBtn,
+  .submitBtn {
+    width: 100%;
+  }
+}

@@ -1,0 +1,529 @@
+.profilePage {
+  min-height: 100vh;
+  background: var(--gray-50);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.profileHeader {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+.avatarSection {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  flex: 1;
+}
+
+.avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid var(--primary-100);
+}
+
+.userInfo h1.userName {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--gray-900);
+  margin: 0 0 0.5rem 0;
+}
+
+.userLocation {
+  color: var(--gray-600);
+  font-size: 1rem;
+  margin: 0 0 0.25rem 0;
+}
+
+.memberSince {
+  color: var(--gray-500);
+  font-size: 0.875rem;
+  margin: 0 0 1rem 0;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.stars {
+  display: flex;
+  gap: 0.125rem;
+}
+
+.starFilled {
+  color: #fbbf24;
+  font-size: 1.25rem;
+}
+
+.starEmpty {
+  color: var(--gray-300);
+  font-size: 1.25rem;
+}
+
+.ratingText {
+  color: var(--gray-600);
+  font-size: 0.875rem;
+}
+
+.statsSection {
+  display: flex;
+  gap: 2rem;
+}
+
+.stat {
+  text-align: center;
+  padding: 1rem;
+  border-radius: var(--radius-md);
+  background: var(--gray-50);
+  min-width: 100px;
+}
+
+.statNumber {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary-600);
+  margin-bottom: 0.25rem;
+}
+
+.statLabel {
+  font-size: 0.75rem;
+  color: var(--gray-600);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.actionButtons {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.homeButton,
+.sellButton,
+.editButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  font-weight: 500;
+  transition: var(--transition-default);
+  cursor: pointer;
+  border: none;
+  font-size: 1rem;
+}
+
+.homeButton {
+  background: var(--gray-100);
+  color: var(--gray-700);
+}
+
+.homeButton:hover {
+  background: var(--gray-200);
+}
+
+.sellButton {
+  background: var(--primary-600);
+  color: white;
+}
+
+.sellButton:hover {
+  background: var(--primary-700);
+}
+
+.editButton {
+  background: var(--secondary-600);
+  color: white;
+}
+
+.editButton:hover {
+  background: var(--secondary-700);
+}
+
+.bioSection {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.bioSection h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--gray-900);
+  margin: 0 0 1rem 0;
+}
+
+.bioSection p {
+  color: var(--gray-700);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.tabNav {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 1.5rem;
+  border: none;
+  background: transparent;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-weight: 500;
+  color: var(--gray-600);
+  transition: var(--transition-default);
+  flex: 1;
+  justify-content: center;
+}
+
+.tab:hover {
+  background: var(--gray-50);
+}
+
+.activeTab {
+  background: var(--primary-600);
+  color: white;
+}
+
+.activeTab:hover {
+  background: var(--primary-700);
+}
+
+.tabContent {
+  min-height: 400px;
+}
+
+.listingsGrid,
+.purchasesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.emptyState {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 3rem;
+  background: white;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.emptyState svg {
+  color: var(--gray-400);
+  margin-bottom: 1rem;
+}
+
+.emptyState h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--gray-900);
+  margin: 0 0 0.5rem 0;
+}
+
+.emptyState p {
+  color: var(--gray-600);
+  margin: 0 0 2rem 0;
+}
+
+.createListingBtn,
+.shopNowBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--primary-600);
+  color: white;
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  font-weight: 500;
+  transition: var(--transition-default);
+}
+
+.createListingBtn:hover,
+.shopNowBtn:hover {
+  background: var(--primary-700);
+}
+
+.listingCard,
+.purchaseCard {
+  background: white;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transition: var(--transition-default);
+}
+
+.listingCard:hover,
+.purchaseCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.listingImage,
+.purchaseImage {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+
+.listingImage img,
+.purchaseImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.statusBadge {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.statusBadge.active {
+  background: #10b981;
+  color: white;
+}
+
+.statusBadge.sold {
+  background: var(--gray-500);
+  color: white;
+}
+
+.statusBadge.delivered {
+  background: #10b981;
+  color: white;
+}
+
+.statusBadge.shipped {
+  background: #3b82f6;
+  color: white;
+}
+
+.statusBadge.processing {
+  background: #f59e0b;
+  color: white;
+}
+
+.listingInfo,
+.purchaseInfo {
+  padding: 1.5rem;
+}
+
+.listingInfo h4,
+.purchaseInfo h4 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--gray-900);
+  margin: 0 0 0.5rem 0;
+}
+
+.price {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--primary-600);
+  margin: 0 0 1rem 0;
+}
+
+.seller {
+  color: var(--gray-600);
+  font-size: 0.875rem;
+  margin: 0 0 0.5rem 0;
+}
+
+.listingMeta,
+.purchaseMeta {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.75rem;
+  color: var(--gray-500);
+}
+
+.listingActions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.markSoldBtn,
+.editBtn,
+.deleteBtn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition-default);
+}
+
+.markSoldBtn {
+  background: #10b981;
+  color: white;
+}
+
+.markSoldBtn:hover {
+  background: #059669;
+}
+
+.editBtn {
+  background: var(--secondary-600);
+  color: white;
+}
+
+.editBtn:hover {
+  background: var(--secondary-700);
+}
+
+.deleteBtn {
+  background: #ef4444;
+  color: white;
+}
+
+.deleteBtn:hover {
+  background: #dc2626;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  max-width: 400px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modalContent h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--gray-900);
+  margin: 0 0 1rem 0;
+}
+
+.modalContent p {
+  color: var(--gray-700);
+  margin: 0 0 2rem 0;
+  line-height: 1.6;
+}
+
+.modalActions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+
+.cancelBtn {
+  padding: 0.75rem 1.5rem;
+  border: 1px solid var(--gray-300);
+  background: white;
+  color: var(--gray-700);
+  border-radius: var(--radius-md);
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition-default);
+}
+
+.cancelBtn:hover {
+  background: var(--gray-50);
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .profileHeader {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .avatarSection {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .statsSection {
+    gap: 1rem;
+    justify-content: center;
+  }
+
+  .stat {
+    min-width: 80px;
+  }
+
+  .actionButtons {
+    flex-direction: column;
+  }
+
+  .tabNav {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .tab {
+    justify-content: flex-start;
+  }
+
+  .listingsGrid,
+  .purchasesGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .listingMeta,
+  .purchaseMeta {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .listingActions {
+    justify-content: center;
+  }
+}

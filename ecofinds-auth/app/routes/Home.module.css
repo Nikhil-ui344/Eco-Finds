@@ -1,0 +1,253 @@
+.landingPage {
+  min-height: 100vh;
+}
+
+.main {
+  position: relative;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.sectionTitle {
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 3rem;
+  color: var(--primary-darkest-green);
+  position: relative;
+  animation: fadeIn 0.8s ease-out;
+}
+
+.sectionTitle::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(135deg, var(--primary-light-green) 0%, var(--primary-green) 100%);
+  border-radius: 2px;
+}
+
+/* Categories Section */
+.categoriesSection {
+  padding: 4rem 0;
+  background: linear-gradient(135deg, var(--primary-cream) 0%, #ffffff 50%, var(--primary-cream) 100%);
+}
+
+.categoriesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+/* Products Section */
+.productsSection {
+  padding: 4rem 0;
+  background: var(--primary-white);
+}
+
+.productGroup {
+  margin-bottom: 3rem;
+}
+
+.groupTitle {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--primary-darkest-green);
+  margin-bottom: 2rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--primary-cream);
+}
+
+.productsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+/* No Results */
+.noResults {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: #666;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.noResultsIcon {
+  color: #aaa;
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.noResults h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--primary-darkest-green);
+  margin-bottom: 1rem;
+}
+
+.noResults p {
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.clearFiltersButton {
+  background: var(--primary-green);
+  color: var(--primary-white);
+  border: none;
+  padding: 0.75rem 2rem;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  font-size: 1rem;
+}
+
+.clearFiltersButton:hover {
+  background: var(--primary-dark-green);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Profile Section */
+.profileSection {
+  padding: 3rem 0;
+  background: linear-gradient(135deg, var(--primary-light-green) 0%, var(--primary-green) 100%);
+  text-align: center;
+}
+
+.profileLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--primary-white);
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 1rem 2rem;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50px;
+  transition: all var(--transition-normal);
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+}
+
+.profileLink::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left var(--transition-slow);
+}
+
+.profileLink:hover::before {
+  left: 100%;
+}
+
+.profileLink:hover {
+  border-color: var(--primary-white);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(49, 78, 80, 0.3);
+}
+
+.profileLink:hover svg {
+  transform: translateX(5px);
+}
+
+.profileLink svg {
+  transition: transform var(--transition-fast);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 1rem;
+  }
+  
+  .sectionTitle {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .categoriesSection,
+  .productsSection {
+    padding: 3rem 0;
+  }
+  
+  .categoriesGrid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .productsGrid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .groupTitle {
+    font-size: 1.5rem;
+  }
+  
+  .profileSection {
+    padding: 2rem 0;
+  }
+  
+  .profileLink {
+    font-size: 1rem;
+    padding: 0.875rem 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .sectionTitle {
+    font-size: 1.75rem;
+  }
+  
+  .categoriesGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .productsGrid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+  
+  .noResults {
+    padding: 3rem 1rem;
+  }
+  
+  .noResults h3 {
+    font-size: 1.25rem;
+  }
+  
+  .noResults p {
+    font-size: 1rem;
+  }
+}

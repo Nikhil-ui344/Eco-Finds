@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+:root {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  
+  /* EcoFinds Theme Palette */
+  --color-eco-bg: #f0efe9;
+  --color-eco-leaf-1: #889B4E;
+  --color-eco-leaf-2: #758E48;
+  --color-eco-ring-1: #5E7257;
+  --color-eco-ring-2: #415D4F;
+  --color-eco-ring-3: #314E50;
+  --color-eco-white: #ffffff;
+  
+  /* Component Theme Variables */
+  --primary-cream: #f0efe9;
+  --primary-light-green: #889B4E;
+  --primary-green: #758E48;
+  --primary-dark-green: #5E7257;
+  --primary-darkest-green: #314E50;
+  --primary-white: #ffffff;
+  --primary-black: #1a1a1a;
+  
+  /* Gray Scale */
+  --gray-50: #fafafa;
+  --gray-100: #f7f7f7;
+  --gray-200: #e5e5e5;
+  --gray-300: #d4d4d4;
+  --gray-400: #a3a3a3;
+  --gray-500: #737373;
+  --gray-600: #525252;
+  --gray-700: #404040;
+  --gray-800: #262626;
+  --gray-900: #171717;
+  
+  /* Border Radius */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+  --transition-default: var(--transition-normal);
+
+  /* Numeric primary scale (aliases to EcoFinds theme) */
+  --primary-25: #f6f8f6;
+  --primary-50: #eef3ef;
+  --primary-300: #98aa6c;
+  --primary-400: var(--primary-light-green);
+  --primary-500: var(--primary-green);
+  --primary-600: var(--primary-dark-green);
+  --primary-700: var(--primary-darkest-green);
+}
+
+html,
+body {
+  background: var(--color-eco-bg);
+  color: #1a1a1a;
+
+  @media (prefers-color-scheme: dark) {
+    color-scheme: dark;
+  }
+}
+
+/* Utility classes mapped to theme colors */
+@layer utilities {
+  .eco-bg { background-color: var(--color-eco-bg); }
+  .eco-leaf { color: var(--color-eco-leaf-1); }
+  .eco-leaf-2 { color: var(--color-eco-leaf-2); }
+  .eco-ring { color: var(--color-eco-ring-1); }
+  .eco-ring-2 { color: var(--color-eco-ring-2); }
+  .eco-ring-3 { color: var(--color-eco-ring-3); }
+  .eco-btn { background-color: var(--color-eco-ring-2); color: var(--color-eco-white); }
+  .eco-btn:hover { background-color: var(--color-eco-ring-3); }
+  .eco-link { color: var(--color-eco-ring-2); }
+  .eco-link:hover { color: var(--color-eco-ring-3); }
+}
