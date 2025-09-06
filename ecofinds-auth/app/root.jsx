@@ -12,6 +12,9 @@ import { AuthProvider } from "./lib/auth";
 import { CartProvider } from "./hooks/cart";
 import { UserProvider } from "./hooks/user";
 
+// Import error suppression to handle Firebase 400 errors
+import "./lib/errorSuppression";
+
 export const links = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
   {

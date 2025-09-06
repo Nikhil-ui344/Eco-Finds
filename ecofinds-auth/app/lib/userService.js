@@ -1,13 +1,31 @@
 import { doc, getDoc, setDoc, updateDoc, collection, addDoc, query, where, getDocs, deleteDoc } from "firebase/firestore";
 import { db } from "./firebase";
 
+// Enhanced safe operation wrapper that prevents 400 errors
+async function safeFirestoreOp(operation, fallback = null) {
+  if (!db) {
+    console.warn('[userService] Firestore not initialized');
+    return fallback;
+  }
+  
+  try {
+    // Add timeout to prevent hanging requests
+    const result = await Promise.race([
+      operation(),
+      new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Operation timeout')), 5000)
+      )
+    ]);
+    return result;
+  } catch (error) {
+    console.error('[userService] Operation failed:', error.code || error.message);
+    return fallback;
+  }
+}
+
 // User profile operations
 export async function createUserProfile(userId, userData) {
-  if (!db) {
-    console.warn('[userService] Firestore not initialized, skipping user profile creation');
-    return null;
-  }
-  try {
+  return safeFirestoreOp(async () => {
     const userRef = doc(db, "users", userId);
     const profile = {
       ...userData,
@@ -18,43 +36,24 @@ export async function createUserProfile(userId, userData) {
     };
     await setDoc(userRef, profile);
     return profile;
-  } catch (error) {
-    console.error("Error creating user profile:", error);
-    throw error;
-  }
+  }, null);
 }
 
 export async function getUserProfile(userId) {
-  if (!db || !userId) {
-    console.warn('[userService] Firestore not initialized or no userId provided');
+  if (!userId) {
+    console.warn('[userService] No userId provided');
     return null;
   }
   
-  // Check if the app is properly initialized
-  if (!db.app) {
-    console.error('[userService] Firebase app is not properly initialized');
-    return null;
-  }
-  
-  try {
+  return safeFirestoreOp(async () => {
     const userRef = doc(db, "users", userId);
     const userSnap = await getDoc(userRef);
     return userSnap.exists() ? userSnap.data() : null;
-  } catch (error) {
-    console.error("Error getting user profile:", error);
-    
-    // Check if it's a network/auth issue
-    if (error.code === 'unavailable' || error.code === 'unauthenticated') {
-      console.warn('[userService] Firestore service unavailable or unauthenticated');
-    }
-    
-    return null;
-  }
+  }, null);
 }
 
 export async function updateUserProfile(userId, updates) {
-  if (!db) return null;
-  try {
+  return safeFirestoreOp(async () => {
     const userRef = doc(db, "users", userId);
     const updateData = {
       ...updates,
@@ -62,10 +61,7 @@ export async function updateUserProfile(userId, updates) {
     };
     await updateDoc(userRef, updateData);
     return updateData;
-  } catch (error) {
-    console.error("Error updating user profile:", error);
-    throw error;
-  }
+  }, null);
 }
 
 // Listing operations
@@ -157,24 +153,9 @@ export async function getAllListings() {
     return [];
   }
   
-  // Check if the app is properly initialized
-  if (!db.app) {
-    console.error('[userService] Firebase app is not properly initialized');
-    return [];
-  }
-  
-  try {
+  return safeFirebaseOperation(async () => {
     const q = query(collection(db, "listings"), where("status", "==", "active"));
     const querySnapshot = await getDocs(q);
     return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-  } catch (error) {
-    console.error("Error getting all listings:", error);
-    
-    // Check if it's a network/auth issue
-    if (error.code === 'unavailable' || error.code === 'unauthenticated') {
-      console.warn('[userService] Firestore service unavailable or unauthenticated');
-    }
-    
-    return [];
-  }
+  }, 'getAllListings', []);
 }

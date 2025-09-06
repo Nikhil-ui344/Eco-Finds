@@ -1,7 +1,8 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
+import { getFirestore, connectFirestoreEmulator, initializeFirestore } from "firebase/firestore";
 
+// Firebase configuration
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
@@ -13,53 +14,45 @@ const firebaseConfig = {
 };
 
 const isBrowser = typeof window !== "undefined";
-const hasConfig = Object.values(firebaseConfig).every(val => val && val !== 'undefined' && val !== undefined);
 
-if (!hasConfig && isBrowser) {
-  console.warn("[firebase] Missing config. Firebase features will be disabled. Copy .env.example to .env and fill keys.");
-  console.log("[firebase] Current config:", firebaseConfig);
-}
-
-let app;
+let app = null;
 let auth = null;
 let db = null;
 
-if (isBrowser && hasConfig) {
+if (isBrowser) {
   try {
-    console.log("[firebase] Initializing with config:", {
-      apiKey: firebaseConfig.apiKey ? "***" : "missing",
-      authDomain: firebaseConfig.authDomain,
-      projectId: firebaseConfig.projectId,
-      storageBucket: firebaseConfig.storageBucket,
-      messagingSenderId: firebaseConfig.messagingSenderId ? "***" : "missing",
-      appId: firebaseConfig.appId ? "***" : "missing"
+    // Initialize Firebase app
+    app = initializeApp(firebaseConfig);
+    
+    // Initialize Auth
+    auth = getAuth(app);
+    
+    // Initialize Firestore with settings that prevent 400 errors
+    db = initializeFirestore(app, {
+      localCache: {
+        kind: 'memory'
+      },
+      experimentalForceLongPolling: true,  // Force long polling instead of WebSocket
     });
     
-    app = initializeApp(firebaseConfig);
-    auth = getAuth(app);
-    db = getFirestore(app);
-    console.log("[firebase] Initialized successfully");
+    console.log("[Firebase] Initialized with long polling to prevent 400 errors");
   } catch (error) {
-    console.error("[firebase] Initialization failed:", error);
-    // Reset to null to prevent further errors
-    app = null;
-    auth = null;
-    db = null;
+    console.error("[Firebase] Initialization failed:", error);
+    // Try fallback initialization
+    try {
+      app = initializeApp(firebaseConfig);
+      auth = getAuth(app);
+      db = getFirestore(app);
+      console.log("[Firebase] Fallback initialization successful");
+    } catch (fallbackError) {
+      console.error("[Firebase] Fallback initialization also failed:", fallbackError);
+      app = null;
+      auth = null;
+      db = null;
+    }
   }
-} else if (isBrowser) {
-  console.error("[firebase] Cannot initialize - missing configuration");
 }
 
 export { auth, db };
 export const isFirebaseReady = Boolean(app);
-
-// Optional analytics init (browser only + supported)
-// export let analytics = null;
-// if (app && isBrowser && import.meta.env.PROD) {
-//   const { getAnalytics, isSupported } = await import("firebase/analytics");
-//   try {
-//     if (await isSupported()) {
-//       analytics = getAnalytics(app);
-//     }
-//   } catch {}
-// }
+export const firebaseApp = app;

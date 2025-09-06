@@ -9,15 +9,46 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!isFirebaseReady) {
+    if (!isFirebaseReady || !auth) {
       setLoading(false);
       return;
     }
-    const unsub = onAuthStateChanged(auth, (u) => {
-      setUser(u);
+    
+    let unsub;
+    let timeoutId;
+    
+    try {
+      // Set a timeout to prevent hanging
+      timeoutId = setTimeout(() => {
+        console.warn('[Auth] Auth state check timeout');
+        setLoading(false);
+      }, 3000);
+      
+      unsub = onAuthStateChanged(auth, (u) => {
+        clearTimeout(timeoutId);
+        setUser(u);
+        setLoading(false);
+      }, (error) => {
+        console.warn('[Auth] Auth state change error:', error);
+        clearTimeout(timeoutId);
+        setLoading(false);
+      });
+    } catch (error) {
+      console.error('[Auth] Failed to set up auth listener:', error);
+      clearTimeout(timeoutId);
       setLoading(false);
-    });
-    return () => unsub();
+    }
+    
+    return () => {
+      if (timeoutId) clearTimeout(timeoutId);
+      if (unsub) {
+        try {
+          unsub();
+        } catch (error) {
+          console.warn('[Auth] Error unsubscribing:', error);
+        }
+      }
+    };
   }, []);
 
   return (
