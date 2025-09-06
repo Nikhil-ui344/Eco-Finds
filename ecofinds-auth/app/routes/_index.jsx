@@ -1,150 +1,40 @@
-import { useState, useEffect } from 'react';
-import { Link } from "react-router";
-import Header from '../components/Header';
-import Hero from '../components/Hero';
-import SearchBar from '../components/SearchBar';
-import Banner from '../components/Banner';
-import CategoryCard from '../components/CategoryCard';
-import ProductCard from '../components/ProductCard';
-import { categories } from '../data/mockData';
-import { getMarketplaceProducts } from '../lib/marketplaceService';
-import styles from './LandingPage.module.css';
+import { useEffect } from "react";
+import { useNavigate } from "react-router";
+import { useAuth } from "../lib/auth";
 
 export function meta() {
   return [
-    { title: "EcoFinds | Discover Amazing Second-Hand Treasures" },
-    { name: "description", content: "Discover amazing second-hand treasures at EcoFinds. Browse eco-friendly products and find great deals on quality pre-loved items." },
+    { title: "EcoFinds" },
+    { name: "description", content: "EcoFinds - Discover Amazing Second-Hand Treasures" },
   ];
 }
 
-export default function LandingPage() {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [products, setProducts] = useState([]);
-  const [filteredProducts, setFilteredProducts] = useState([]);
-  const [sortBy, setSortBy] = useState('name');
-  const [filterBy, setFilterBy] = useState('all');
-  const [groupBy, setGroupBy] = useState('none');
-  const [noResults, setNoResults] = useState(false);
-  const [loading, setLoading] = useState(true);
-
-  // Load marketplace products on mount
-  useEffect(() => {
-    loadProducts();
-  }, []);
-
-  const loadProducts = async () => {
-    try {
-      const marketplaceProducts = await getMarketplaceProducts();
-      setProducts(marketplaceProducts);
-      setFilteredProducts(marketplaceProducts);
-    } catch (error) {
-      console.error('Error loading products:', error);
-    }
-    setLoading(false);
-  };
+export default function RootRedirect() {
+  const navigate = useNavigate();
+  const { user, loading } = useAuth();
 
   useEffect(() => {
-    if (!products.length) return;
-    
-    let filtered = [...products];
-
-    // Enhanced search filter with tags and fuzzy matching
-    if (searchQuery) {
-      const query = searchQuery.toLowerCase().trim();
-      filtered = filtered.filter(product => {
-        // Search in product name
-        const nameMatch = product.name.toLowerCase().includes(query);
-        
-        // Search in original name
-        const originalNameMatch = product.originalName?.toLowerCase().includes(query);
-        
-        // Search in tags
-        const tagMatch = product.tags?.some(tag => 
-          tag.toLowerCase().includes(query) || query.includes(tag.toLowerCase())
-        );
-        
-        // Search in description
-        const descriptionMatch = product.description.toLowerCase().includes(query);
-        
-        // Search in category
-        const categoryMatch = product.category.toLowerCase().includes(query);
-        
-        // Return true if any match is found
-        return nameMatch || originalNameMatch || tagMatch || descriptionMatch || categoryMatch;
-      });
-    }
-
-    // Apply category filter
-    if (filterBy !== 'all') {
-      filtered = filtered.filter(product => product.category === filterBy);
-    }
-
-    // Apply sorting
-    switch (sortBy) {
-      case 'price-low':
-        filtered.sort((a, b) => a.price - b.price);
-        break;
-      case 'price-high':
-        filtered.sort((a, b) => b.price - a.price);
-        break;
-      case 'condition':
-        const conditionOrder = { 'Excellent': 4, 'Very Good': 3, 'Good': 2, 'Fair': 1 };
-        filtered.sort((a, b) => (conditionOrder[b.condition] || 0) - (conditionOrder[a.condition] || 0));
-        break;
-      case 'rating':
-        filtered.sort((a, b) => b.rating - a.rating);
-        break;
-      case 'newest':
-        filtered.sort((a, b) => b.id - a.id);
-        break;
-      default:
-        filtered.sort((a, b) => a.name.localeCompare(b.name));
-    }
-
-    setFilteredProducts(filtered);
-    setNoResults(filtered.length === 0 && (searchQuery || filterBy !== 'all'));
-  }, [searchQuery, sortBy, filterBy, products]);
-
-  const groupProducts = () => {
-    if (groupBy === 'none') {
-      return { 'All Products': filteredProducts };
-    }
-
-    const grouped = {};
-    
-    filteredProducts.forEach(product => {
-      let key;
-      switch (groupBy) {
-        case 'category':
-          key = product.category;
-          break;
-        case 'condition':
-          key = product.condition;
-          break;
-        case 'price':
-          if (product.price < 30) key = 'Under $30';
-          else if (product.price < 60) key = '$30 - $60';
-          else if (product.price < 100) key = '$60 - $100';
-          else key = 'Over $100';
-          break;
-        case 'rating':
-          if (product.rating >= 4.5) key = '4.5+ Stars';
-          else if (product.rating >= 4) key = '4+ Stars';
-          else if (product.rating >= 3.5) key = '3.5+ Stars';
-          else key = 'Under 3.5 Stars';
-          break;
-        default:
-          key = 'All Products';
+    if (!loading) {
+      if (user) {
+        // If user is logged in, redirect to dashboard
+        navigate("/dashboard", { replace: true });
+      } else {
+        // If user is not logged in, redirect to login
+        navigate("/login", { replace: true });
       }
-      
-      if (!grouped[key]) grouped[key] = [];
-      grouped[key].push(product);
-    });
+    }
+  }, [user, loading, navigate]);
 
-    return grouped;
-  };
-
-  const groupedProducts = groupProducts();
+  // Show a simple loading message while redirecting
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="text-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
+        <p className="text-gray-600">Loading...</p>
+      </div>
+    </div>
+  );
+}
 
   return (
     <div className={styles.landingPage}>
